@@ -1,0 +1,44 @@
+{% extends "account/base_entrance.html" %}
+{% load allauth i18n %}
+{% block title %}
+    {% trans "Signup" %}
+{% endblock title %}
+{% block content %}
+    {% if not SOCIALACCOUNT_ONLY %}
+            <div class="flex items-center bg-white dark:bg-gray-900 container w-[100vw] h-[100vh]">
+                {% setvar link %}
+                <a href="{{ login_url }}">
+                {% endsetvar %}
+                {% setvar end_link %}
+                </a>
+                {% endsetvar %}
+                {% url 'account_signup' as action_url %}
+                <div class="max-w-md mx-auto my-10 ">
+                    <div class="text-center">
+                        <h1 class="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">Sign Up</h1>
+                        <p class="text-gray-500 dark:text-gray-400">Sign in to access your account</p>
+                    </div>
+                    <div class="m-7 text-sm text-gray-600 dark:text-gray-400">                        
+                        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
+                            {% slot body %}
+                                {% csrf_token %}
+                                {% element fields form=form unlabeled=True %}
+                                {% endelement %}
+                                {{ redirect_field }}
+                            {% endslot %}
+                            {% slot actions %}
+                                <div class="m-6">
+                                    <button type="submit" tags="prominent,signup" class="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none">Sign Up</button>
+                                </div>
+                                <p class="text-sm text-center text-gray-400">Already have an account? <a href="/login/" class="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500 dark:focus:border-indigo-800">Sign in</a>.</p>
+                            {% endslot %}
+                        {% endelement %}
+                    </div>
+                </div>
+            </div>
+    {% endif %}
+    
+    {% if SOCIALACCOUNT_ENABLED %}
+        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    {% endif %}
+{% endblock content %}

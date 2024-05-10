@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Changed Name
+{% endblock title %}
+
+{% block body %}
+    <div id="posts-container">
+        <div class="flex">
+
+            <div class=" border border-r-2 pr-5">
+                <h2 class="text-center text-2xl text-violet-500 font-bold">My followed posts</h2>
+                {% for post in posts %}
+                    {% include 'includes/post.html' with post=post  show_detail_link=True%}
+                {% endfor %}
+            </div>
+    
+            <div class=" border border-l-2 pl-5">
+                {% if not following %}    
+                <h2 class="text-center text-2xl text-violet-500 font-bold">Other posts</h2>
+                    {% for post in other_posts %}
+                        {% include 'includes/post.html' with post=post  show_detail_link=True%}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+            
+    </div>
+{% endblock body %}
+    

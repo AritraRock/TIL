@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}
+    {{post.text}}
+{% endblock title %}
+
+
+{% block body %}
+    {% include 'includes/post.html' with post=post %}
+{% endblock body %}
+    
